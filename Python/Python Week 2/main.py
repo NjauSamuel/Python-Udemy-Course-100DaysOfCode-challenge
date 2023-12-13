@@ -49,33 +49,58 @@ def format_data(account):
     return f"{account_name}, a {account_descr}, from {account_country}"
 
 
+def check_answer(guess, a_followers, b_followers):
+    # Check the user guess and follower counts and returns if they got it right.
+    if a_followers > b_followers:
+        return guess == "a"
+    else:
+        return guess == "b"
+
+
 # Displaying the art logo from the art.py module
 print(logo)
-
-# Generating a roandom account from the game data
-
-account_a = random.choice(data)
+score = 0
+game_should_continue = True
 account_b = random.choice(data)
 
-if account_a == account_b:
+
+# Making the game repeatable
+
+while game_should_continue:
+
+    # Generating a roandom account from the game data
+
+    account_a = account_b
     account_b = random.choice(data)
 
-print(f"Campare A: {format_data(account_a)}")
-print(f"Campare A: {format_data(account_b)}")
+    while account_a == account_b:
+        account_b = random.choice(data)
 
+    print(f"Campare A: {format_data(account_a)}.")
+    print(vs)
+    print(f"Campare A: {format_data(account_b)}.")
 
-# Asking the user for a guess.
+    # Asking the user for a guess.
+    guess = input("'Who has more followers? Type 'A' or 'B''").lower()
 
-# checking if the user is correct.
-# Get the follower count for each account.
-# Use the if statement to check if user is correct.
+    # checking if the user is correct.
+    # Get the follower count for each account.
+    a_follower_count = account_a["follower_count"]
+    b_follower_count = account_b["follower_count"]
 
-# Give the user feedback on their guess.
+    is_correct = check_answer(guess, a_follower_count, b_follower_count)
+    # Use the if statement to check if user is correct.
 
-# Score keeping.
+    # Give the user feedback on their guess.
 
-# Make the game repeatable.
+    # Score keeping.
+    if is_correct:
+        score += 1
+        print(f"Youre right! Current score: {score}. ")
+    else:
+        game_should_continue = False
+        print(f"Sorry, that's wrong. Final score: {score}")
 
-# Making account at position b become the next account at position A
+    # Making account at position b become the next account at position A
 
-# Clear the screen in between rounds.
+    # Clear the screen in between rounds.
